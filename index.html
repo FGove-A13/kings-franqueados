@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kings Sneakers — Seja um Franqueado</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #fff;
+      color: #1a1a1a;
+      padding: 40px 24px;
+    }
+
+    .form-wrapper {
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    .form-title {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .form-subtitle {
+      font-size: 13px;
+      color: #666;
+      margin-bottom: 28px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px 20px;
+    }
+
+    .field { display: flex; flex-direction: column; gap: 5px; }
+    .field.full { grid-column: 1 / -1; }
+
+    .field label {
+      font-size: 12px;
+      font-weight: 500;
+      color: #444;
+    }
+
+    .field input[type="text"],
+    .field input[type="email"],
+    .field input[type="tel"],
+    .field select {
+      width: 100%;
+      height: 38px;
+      padding: 0 10px;
+      border: 1px solid #d1d1d1;
+      border-radius: 4px;
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      color: #1a1a1a;
+      background: #fff;
+      outline: none;
+      appearance: none;
+      -webkit-appearance: none;
+      transition: border-color 0.15s;
+    }
+
+    .field select { padding-right: 32px; }
+
+    .field input[type="text"]::placeholder,
+    .field input[type="email"]::placeholder,
+    .field input[type="tel"]::placeholder { color: #aaa; }
+
+    .field input[type="text"]:focus,
+    .field input[type="email"]:focus,
+    .field input[type="tel"]:focus,
+    .field select:focus { border-color: #555; }
+
+    .field input[type="text"].error,
+    .field input[type="email"].error,
+    .field input[type="tel"].error,
+    .field select.error { border-color: #d9534f; }
+
+    .field-error {
+      font-size: 11px;
+      color: #d9534f;
+      display: none;
+    }
+    .field-error.visible { display: block; }
+
+    .select-wrap { position: relative; width: 100%; }
+    .select-wrap select { width: 100%; }
+    .select-wrap::after {
+      content: '';
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      border-left: 4px solid transparent;
+      border-right: 4px solid transparent;
+      border-top: 5px solid #777;
+      pointer-events: none;
+    }
+
+    .radio-group {
+      display: flex;
+      gap: 24px;
+      align-items: center;
+      padding: 6px 0;
+    }
+    .radio-option {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 13px;
+      color: #1a1a1a;
+      cursor: pointer;
+    }
+    .radio-option input[type="radio"] {
+      width: 16px;
+      height: 16px;
+      cursor: pointer;
+      margin: 0;
+      flex-shrink: 0;
+    }
+
+    .divider {
+      grid-column: 1 / -1;
+      border: none;
+      border-top: 1px solid #eee;
+      margin: 6px 0;
+    }
+
+    .submit-btn {
+      margin-top: 24px;
+      width: 100%;
+      height: 42px;
+      background: #1a1a1a;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      letter-spacing: 0.3px;
+      transition: background 0.15s;
+    }
+    .submit-btn:hover { background: #333; }
+    .submit-btn:disabled { background: #aaa; cursor: not-allowed; }
+
+    .status {
+      display: none;
+      margin-top: 14px;
+      padding: 10px 14px;
+      border-radius: 4px;
+      font-size: 13px;
+      text-align: center;
+    }
+    .status.success   { display: block; background: #eaf7ee; color: #2d7a45; border: 1px solid #b2dfca; }
+    .status.error-msg { display: block; background: #fdf0f0; color: #c0392b; border: 1px solid #f5c6c6; }
+
+    @media (max-width: 520px) {
+      .grid { grid-template-columns: 1fr; }
+      .field.full { grid-column: auto; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="form-wrapper">
+
+  <div class="form-title">Quero ser um Franqueado Kings</div>
+  <div class="form-subtitle">Preencha os campos abaixo e nossa equipe comercial entrará em contato.</div>
+
+  <div class="grid">
+
+    <div class="field full">
+      <label>Nome completo *</label>
+      <input type="text" id="nome" placeholder="Seu nome completo" autocomplete="name" />
+      <span class="field-error" id="err-nome">Informe seu nome completo.</span>
+    </div>
+
+    <div class="field">
+      <label>E-mail *</label>
+      <input type="email" id="email" placeholder="seu@email.com" autocomplete="email" />
+      <span class="field-error" id="err-email">Informe um e-mail válido.</span>
+    </div>
+
+    <div class="field">
+      <label>WhatsApp *</label>
+      <input type="tel" id="whatsapp" placeholder="(11) 99999-9999" maxlength="15" autocomplete="tel" />
+      <span class="field-error" id="err-whatsapp">Informe um número válido.</span>
+    </div>
+
+    <div class="field">
+      <label>Cidade *</label>
+      <input type="text" id="cidade" placeholder="Ex: São Paulo" />
+      <span class="field-error" id="err-cidade">Informe sua cidade.</span>
+    </div>
+
+    <div class="field">
+      <label>Estado *</label>
+      <div class="select-wrap">
+        <select id="estado">
+          <option value="">Selecione</option>
+          <option>AC</option><option>AL</option><option>AP</option><option>AM</option>
+          <option>BA</option><option>CE</option><option>DF</option><option>ES</option>
+          <option>GO</option><option>MA</option><option>MT</option><option>MS</option>
+          <option>MG</option><option>PA</option><option>PB</option><option>PR</option>
+          <option>PE</option><option>PI</option><option>RJ</option><option>RN</option>
+          <option>RS</option><option>RO</option><option>RR</option><option>SC</option>
+          <option>SP</option><option>SE</option><option>TO</option>
+        </select>
+      </div>
+      <span class="field-error" id="err-estado">Selecione o estado.</span>
+    </div>
+
+    <div class="field full">
+      <label>Faixa de investimento disponível *</label>
+      <div class="select-wrap">
+        <select id="investimento">
+          <option value="">Selecione uma faixa</option>
+          <option value="R$ 300.000 a R$ 400.000">R$ 300.000 a R$ 400.000</option>
+          <option value="R$ 500.000 a R$ 700.000">R$ 500.000 a R$ 700.000</option>
+          <option value="Acima de R$ 700.000">Acima de R$ 700.000</option>
+        </select>
+      </div>
+      <span class="field-error" id="err-investimento">Selecione a faixa de investimento.</span>
+    </div>
+
+    <hr class="divider" />
+
+    <div class="field full">
+      <label>Já tem ponto comercial? *</label>
+      <div class="radio-group">
+        <label class="radio-option">
+          <input type="radio" name="ponto" value="Sim" /> Sim
+        </label>
+        <label class="radio-option">
+          <input type="radio" name="ponto" value="Não" /> Não
+        </label>
+      </div>
+      <span class="field-error" id="err-ponto">Selecione uma opção.</span>
+    </div>
+
+    <div class="field full">
+      <label>Em quanto tempo pretende realizar esse investimento? *</label>
+      <div class="select-wrap">
+        <select id="prazo">
+          <option value="">Selecione</option>
+          <option value="Em 3 meses">Em 3 meses</option>
+          <option value="Em 6 meses">Em 6 meses</option>
+          <option value="Em 1 ano">Em 1 ano</option>
+          <option value="Sem previsão de investimento">Sem previsão de investimento</option>
+        </select>
+      </div>
+      <span class="field-error" id="err-prazo">Selecione o prazo previsto.</span>
+    </div>
+
+  </div>
+
+  <button class="submit-btn" id="submitBtn" onclick="handleSubmit()">Enviar solicitação</button>
+  <div class="status" id="statusMsg"></div>
+
+</div>
+
+<script>
+  const WEBHOOK = "https://hook.us2.make.com/8wvxtipwmsar1tc9dijxepbp5gwdcdku";
+
+  // Máscara telefone
+  document.getElementById('whatsapp').addEventListener('input', function(e) {
+    let v = e.target.value.replace(/\D/g, '').substring(0, 11);
+    if (v.length > 6)      v = `(${v.slice(0,2)}) ${v.slice(2,7)}-${v.slice(7)}`;
+    else if (v.length > 2) v = `(${v.slice(0,2)}) ${v.slice(2)}`;
+    else if (v.length > 0) v = `(${v}`;
+    e.target.value = v;
+  });
+
+  function setErr(inputId, errId, show) {
+    const el  = document.getElementById(inputId);
+    const err = document.getElementById(errId);
+    if (el)  el.classList.toggle('error', show);
+    if (err) err.classList.toggle('visible', show);
+  }
+
+  const validEmail = e => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e);
+  const validPhone = p => p.replace(/\D/g, '').length >= 10;
+
+  function showStatus(type, msg) {
+    const el = document.getElementById('statusMsg');
+    el.className = 'status ' + (type === 'success' ? 'success' : 'error-msg');
+    el.textContent = msg;
+    el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  function resetForm() {
+    ['nome','email','whatsapp','cidade','estado','investimento','prazo']
+      .forEach(id => document.getElementById(id).value = '');
+    document.querySelectorAll('input[name="ponto"]').forEach(el => el.checked = false);
+  }
+
+  async function handleSubmit() {
+    const nome         = document.getElementById('nome').value.trim();
+    const email        = document.getElementById('email').value.trim();
+    const whatsapp     = document.getElementById('whatsapp').value.trim();
+    const cidade       = document.getElementById('cidade').value.trim();
+    const estado       = document.getElementById('estado').value;
+    const investimento = document.getElementById('investimento').value;
+    const prazo        = document.getElementById('prazo').value;
+    const pontoEl      = document.querySelector('input[name="ponto"]:checked');
+
+    let ok = true;
+    if (!nome)                { setErr('nome','err-nome',true);                ok=false; } else setErr('nome','err-nome',false);
+    if (!validEmail(email))   { setErr('email','err-email',true);              ok=false; } else setErr('email','err-email',false);
+    if (!validPhone(whatsapp)){ setErr('whatsapp','err-whatsapp',true);        ok=false; } else setErr('whatsapp','err-whatsapp',false);
+    if (!cidade)              { setErr('cidade','err-cidade',true);            ok=false; } else setErr('cidade','err-cidade',false);
+    if (!estado)              { setErr('estado','err-estado',true);            ok=false; } else setErr('estado','err-estado',false);
+    if (!investimento)        { setErr('investimento','err-investimento',true);ok=false; } else setErr('investimento','err-investimento',false);
+    if (!prazo)               { setErr('prazo','err-prazo',true);              ok=false; } else setErr('prazo','err-prazo',false);
+
+    const errPonto = document.getElementById('err-ponto');
+    if (!pontoEl) { errPonto.classList.add('visible'); ok=false; }
+    else           errPonto.classList.remove('visible');
+
+    if (!ok) return;
+
+    const btn = document.getElementById('submitBtn');
+    btn.disabled = true;
+    btn.textContent = 'Enviando...';
+
+    const payload = {
+      nome,
+      email,
+      whatsapp,
+      cidade,
+      estado,
+      faixa_investimento: investimento,
+      ponto_comercial: pontoEl.value,
+      prazo_investimento: prazo,
+      data_envio: new Date().toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo' }),
+      origem: window.location.href
+    };
+
+    try {
+      const res = await fetch(WEBHOOK, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+      });
+
+      if (res.ok) {
+        showStatus('success', '✅ Solicitação enviada! Nossa equipe entrará em contato em breve.');
+        resetForm();
+      } else {
+        showStatus('error', `❌ Erro ${res.status}. Tente novamente ou entre em contato pelo WhatsApp.`);
+      }
+    } catch (err) {
+      console.error('Erro:', err);
+      showStatus('error', '❌ Erro de conexão. Verifique sua internet e tente novamente.');
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'Enviar solicitação';
+    }
+  }
+</script>
+
+</body>
+</html>
